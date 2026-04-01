@@ -8,7 +8,9 @@ Build a web-based pharmacy management system to automate medicine stock tracking
 
 - Admin
 - Pharmacist
-- Cashier
+
+Role rule:
+- Pharmacist handles billing and sales operations.
 
 ## 3. Functional Modules (MVP)
 
@@ -26,6 +28,7 @@ Build a web-based pharmacy management system to automate medicine stock tracking
 - Do not allow sale quantity greater than available stock.
 - Use batch-wise stock updates for purchase and sale.
 - Record each stock movement as a transaction.
+- Access control hierarchy: `ADMIN > PHARMACIST`.
 
 ## 5. Non-Functional Requirements
 
