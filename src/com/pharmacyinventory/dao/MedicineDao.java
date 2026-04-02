@@ -101,6 +101,51 @@ public class MedicineDao {
         }
     }
 
+    public long countAll() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM medicines";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        }
+        return 0;
+    }
+
+    public long countLowStock() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM ("
+                + "SELECT m.id "
+                + "FROM medicines m "
+                + "LEFT JOIN medicine_batches b ON b.medicine_id = m.id "
+                + "GROUP BY m.id, m.reorder_level "
+                + "HAVING COALESCE(SUM(b.qty_in_stock), 0) < m.reorder_level"
+                + ") low_stock";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        }
+        return 0;
+    }
+
+    public long countNearExpiry(int withinDays) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM medicine_batches "
+                + "WHERE exp_date BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL ? DAY)";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql)) {
+            statement.setInt(1, withinDays);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getLong(1);
+                }
+            }
+        }
+        return 0;
+    }
+
     private Medicine mapRow(ResultSet resultSet) throws SQLException {
         Medicine medicine = new Medicine();
         medicine.setId(resultSet.getLong("id"));

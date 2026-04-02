@@ -101,6 +101,18 @@ public class SupplierDao {
         }
     }
 
+    public long countAll() throws SQLException {
+        String sql = "SELECT COUNT(*) FROM suppliers";
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql);
+             ResultSet resultSet = statement.executeQuery()) {
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+        }
+        return 0;
+    }
+
     private Supplier mapRow(ResultSet resultSet) throws SQLException {
         Supplier supplier = new Supplier();
         supplier.setId(resultSet.getLong("id"));

@@ -27,6 +27,17 @@ Day 2 database layer is complete:
 - ER diagram documented
 - JDBC model and DAO mappings added for medicines and suppliers
 
+## Day 3 Status
+
+Day 3 authentication and management UI is complete:
+
+- Login and logout with session-based access control
+- Password validation using SHA-256 hash check
+- Dashboard metrics wired to database
+- Medicine CRUD flow (Servlet + DAO + JSP)
+- Supplier CRUD flow (Servlet + DAO + JSP)
+- Medical-themed responsive UI for login and management screens
+
 ## Project Structure
 
 ```text
@@ -53,4 +64,4 @@ database/
 
 ## Next
 
-Day 3: Authentication flow + medicine/supplier management screens with servlet integration.
+Day 4: Batch-wise inventory workflows and stock transaction tracking.
