@@ -38,6 +38,17 @@ Day 3 authentication and management UI is complete:
 - Supplier CRUD flow (Servlet + DAO + JSP)
 - Medical-themed responsive UI for login and management screens
 
+## Day 4 Status
+
+Day 4 inventory and alert workflows are complete:
+
+- Batch-wise inventory stock entry with expiry and pricing
+- Manual stock in/out adjustment with transaction logging
+- Stock transaction history view in UI
+- Expiry alerts page with configurable upcoming window (30/60/90/120 days)
+- Navigation updated across dashboard and management screens
+- Admin-only pharmacist user creation and pharmacist user listing
+
 ## Project Structure
 
 ```text
@@ -64,4 +75,4 @@ database/
 
 ## Next
 
-Day 4: Batch-wise inventory workflows and stock transaction tracking.
+Day 5: Billing module with FIFO batch deduction and invoice generation.

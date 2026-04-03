@@ -21,6 +21,8 @@
         Object nearExpiryCount = request.getAttribute("nearExpiryCount");
         Object todaySales = request.getAttribute("todaySales");
         String currentUser = (String) session.getAttribute("loggedInUserName");
+        String role = String.valueOf(session.getAttribute("loggedInUserRole"));
+        boolean isAdmin = "ADMIN".equalsIgnoreCase(role);
         if (currentUser == null) {
             currentUser = (String) session.getAttribute("loggedInUser");
         }
@@ -32,6 +34,11 @@
             <a class="active" href="<%= request.getContextPath() %>/dashboard">Dashboard</a>
             <a href="<%= request.getContextPath() %>/medicines">Medicines</a>
             <a href="<%= request.getContextPath() %>/suppliers">Suppliers</a>
+            <a href="<%= request.getContextPath() %>/inventory">Inventory</a>
+            <a href="<%= request.getContextPath() %>/expiry-alerts">Expiry Alerts</a>
+            <% if (isAdmin) { %>
+                <a href="<%= request.getContextPath() %>/pharmacists">Pharmacists</a>
+            <% } %>
             <a href="<%= request.getContextPath() %>/logout">Logout</a>
         </nav>
     </header>

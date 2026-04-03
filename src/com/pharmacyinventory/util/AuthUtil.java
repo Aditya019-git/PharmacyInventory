@@ -19,4 +19,17 @@ public final class AuthUtil {
         }
         return true;
     }
+
+    public static boolean requireAdmin(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        if (!requireLogin(request, response)) {
+            return false;
+        }
+        HttpSession session = request.getSession(false);
+        Object role = session == null ? null : session.getAttribute("loggedInUserRole");
+        if (role == null || !"ADMIN".equalsIgnoreCase(role.toString())) {
+            response.sendRedirect(request.getContextPath() + "/dashboard");
+            return false;
+        }
+        return true;
+    }
 }

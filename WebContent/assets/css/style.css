@@ -167,6 +167,7 @@ label {
 }
 
 input,
+select,
 button,
 .btn {
     border-radius: 10px;
@@ -176,6 +177,12 @@ button,
 }
 
 input:focus {
+    outline: none;
+    border-color: #0f9aa8;
+    box-shadow: 0 0 0 3px rgba(15, 154, 168, 0.16);
+}
+
+select:focus {
     outline: none;
     border-color: #0f9aa8;
     box-shadow: 0 0 0 3px rgba(15, 154, 168, 0.16);
@@ -256,6 +263,14 @@ th {
 .empty-cell {
     text-align: center;
     color: #648192;
+}
+
+.row-warning td {
+    background: #fff9ea;
+}
+
+.row-danger td {
+    background: #fff2f2;
 }
 
 .alert {
@@ -349,10 +364,33 @@ th {
     gap: 10px;
 }
 
+.inline-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.inline-form label {
+    margin-right: 6px;
+}
+
+.inline-form select {
+    min-width: 150px;
+}
+
 .hint {
     margin-top: 14px;
     color: #5e7c8d;
     font-size: 13px;
+}
+
+.simple-list {
+    margin: 12px 0 0;
+    padding-left: 20px;
+    color: #355d71;
+    line-height: 1.7;
 }
 
 @keyframes rise {

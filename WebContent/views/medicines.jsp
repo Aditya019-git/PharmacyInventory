@@ -7,6 +7,7 @@
         response.sendRedirect(request.getContextPath() + "/login");
         return;
     }
+    boolean isAdmin = "ADMIN".equalsIgnoreCase(String.valueOf(session.getAttribute("loggedInUserRole")));
 %>
 <!DOCTYPE html>
 <html>
@@ -33,6 +34,11 @@
             <a href="<%= request.getContextPath() %>/dashboard">Dashboard</a>
             <a class="active" href="<%= request.getContextPath() %>/medicines">Medicines</a>
             <a href="<%= request.getContextPath() %>/suppliers">Suppliers</a>
+            <a href="<%= request.getContextPath() %>/inventory">Inventory</a>
+            <a href="<%= request.getContextPath() %>/expiry-alerts">Expiry Alerts</a>
+            <% if (isAdmin) { %>
+                <a href="<%= request.getContextPath() %>/pharmacists">Pharmacists</a>
+            <% } %>
             <a href="<%= request.getContextPath() %>/logout">Logout</a>
         </nav>
     </header>
