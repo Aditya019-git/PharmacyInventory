@@ -49,6 +49,17 @@ Day 4 inventory and alert workflows are complete:
 - Navigation updated across dashboard and management screens
 - Admin-only pharmacist user creation and pharmacist user listing
 
+## Day 5 Status
+
+Day 5 billing and invoice workflows are complete:
+
+- Cart-based billing screen with medicine selection and quantity controls
+- FIFO stock deduction using earliest non-expired batches first
+- Automatic write to `sales`, `sale_items`, and `stock_transactions` on checkout
+- Validation for insufficient/non-expired stock before bill completion
+- Printable invoice page with totals, payment mode, and itemized batch lines
+- Billing menu integrated across all primary modules
+
 ## Project Structure
 
 ```text
@@ -75,4 +86,4 @@ database/
 
 ## Next
 
-Day 5: Billing module with FIFO batch deduction and invoice generation.
+Day 6: Reports module and export-ready daily/weekly sales summaries.

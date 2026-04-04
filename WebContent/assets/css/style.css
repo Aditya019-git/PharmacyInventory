@@ -380,6 +380,78 @@ th {
     min-width: 150px;
 }
 
+.summary-strip {
+    grid-column: span 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    background: #eff9fc;
+    border: 1px solid #d3ebf4;
+    color: #275b72;
+}
+
+button.link-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+}
+
+.invoice-panel {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.invoice-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.invoice-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.invoice-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 8px 16px;
+    padding: 14px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    border: 1px solid #d7eaf3;
+    background: #f7fcff;
+}
+
+.invoice-totals {
+    margin-top: 16px;
+    margin-left: auto;
+    max-width: 360px;
+    display: grid;
+    gap: 6px;
+}
+
+.invoice-totals > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 10px;
+    border-bottom: 1px dashed #d6e7ef;
+}
+
+.invoice-totals .grand-total {
+    border: 1px solid #bde2f2;
+    border-radius: 10px;
+    background: #eaf8ff;
+    font-size: 18px;
+    font-weight: 800;
+}
+
 .hint {
     margin-top: 14px;
     color: #5e7c8d;
@@ -457,5 +529,44 @@ th {
     .action-row {
         grid-column: span 1;
         flex-direction: column;
+    }
+
+    .summary-strip {
+        grid-column: span 1;
+    }
+
+    .invoice-header {
+        flex-direction: column;
+    }
+
+    .invoice-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .invoice-meta {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media print {
+    .top-nav,
+    .invoice-actions {
+        display: none !important;
+    }
+
+    .medical-bg {
+        background: #fff !important;
+    }
+
+    .page-wrap {
+        margin: 0;
+        padding: 0;
+        max-width: 100%;
+    }
+
+    .panel {
+        box-shadow: none;
+        border: 1px solid #d6d6d6;
     }
 }

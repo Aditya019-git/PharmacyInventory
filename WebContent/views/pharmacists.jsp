@@ -36,6 +36,7 @@
             <a href="<%= request.getContextPath() %>/suppliers">Suppliers</a>
             <a href="<%= request.getContextPath() %>/inventory">Inventory</a>
             <a href="<%= request.getContextPath() %>/expiry-alerts">Expiry Alerts</a>
+            <a href="<%= request.getContextPath() %>/billing">Billing</a>
             <a class="active" href="<%= request.getContextPath() %>/pharmacists">Pharmacists</a>
             <a href="<%= request.getContextPath() %>/logout">Logout</a>
         </nav>
