@@ -1,5 +1,6 @@
 package com.pharmacyinventory.controller;
 
+import com.pharmacyinventory.dao.AuditDao;
 import com.pharmacyinventory.dao.UserDao;
 import com.pharmacyinventory.util.AuthUtil;
 
@@ -19,6 +20,7 @@ public class PharmacistServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final UserDao userDao = new UserDao();
+    private final AuditDao auditDao = new AuditDao();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,6 +48,10 @@ public class PharmacistServlet extends HttpServlet {
         String fullName = trim(request.getParameter("fullName"));
         String username = trim(request.getParameter("username"));
         String password = request.getParameter("password");
+        Long adminUserId = null;
+        if (request.getSession(false) != null) {
+            adminUserId = parseSessionUserId(request.getSession(false).getAttribute("loggedInUserId"));
+        }
 
         if (fullName.isEmpty() || username.isEmpty() || password == null || password.trim().isEmpty()) {
             response.sendRedirect(request.getContextPath() + "/pharmacists?error="
@@ -64,11 +70,15 @@ public class PharmacistServlet extends HttpServlet {
                         + encode("Username already exists. Choose another username."));
                 return;
             }
-            boolean created = userDao.createPharmacist(fullName, username, password);
-            if (!created) {
+            long pharmacistUserId = userDao.createPharmacist(fullName, username, password);
+            if (pharmacistUserId <= 0) {
                 response.sendRedirect(request.getContextPath() + "/pharmacists?error="
                         + encode("Unable to create pharmacist right now."));
                 return;
+            }
+            try {
+                auditDao.logAction("users", pharmacistUserId, "INSERT", adminUserId);
+            } catch (SQLException ignored) {
             }
             response.sendRedirect(request.getContextPath() + "/pharmacists?success="
                     + encode("Pharmacist account created successfully."));
@@ -84,5 +94,21 @@ public class PharmacistServlet extends HttpServlet {
 
     private String encode(String value) {
         return URLEncoder.encode(value, StandardCharsets.UTF_8);
+    }
+
+    private Long parseSessionUserId(Object userIdObj) {
+        if (userIdObj instanceof Number) {
+            long val = ((Number) userIdObj).longValue();
+            return val > 0 ? val : null;
+        }
+        if (userIdObj instanceof String) {
+            try {
+                long val = Long.parseLong((String) userIdObj);
+                return val > 0 ? val : null;
+            } catch (NumberFormatException e) {
+                return null;
+            }
+        }
+        return null;
     }
 }

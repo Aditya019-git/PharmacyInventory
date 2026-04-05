@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -47,15 +48,24 @@ public class UserDao {
         return users;
     }
 
-    public boolean createPharmacist(String fullName, String username, String rawPassword) throws SQLException {
+    public long createPharmacist(String fullName, String username, String rawPassword) throws SQLException {
         String sql = "INSERT INTO users (full_name, username, password_hash, role, is_active) "
                 + "VALUES (?, ?, ?, 'PHARMACIST', 1)";
         try (Connection connection = DBConnection.getConnection();
-             PreparedStatement statement = connection.prepareStatement(sql)) {
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             statement.setString(1, fullName);
             statement.setString(2, username);
             statement.setString(3, PasswordUtil.sha256(rawPassword));
-            return statement.executeUpdate() == 1;
+            int updated = statement.executeUpdate();
+            if (updated != 1) {
+                return -1;
+            }
+            try (ResultSet keys = statement.getGeneratedKeys()) {
+                if (keys.next()) {
+                    return keys.getLong(1);
+                }
+            }
+            return -1;
         }
     }
 

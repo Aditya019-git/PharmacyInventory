@@ -1,5 +1,6 @@
 package com.pharmacyinventory.controller;
 
+import com.pharmacyinventory.dao.AuditDao;
 import com.pharmacyinventory.dao.UserDao;
 import com.pharmacyinventory.model.User;
 
@@ -19,6 +20,7 @@ public class LoginServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     private final UserDao userDao = new UserDao();
+    private final AuditDao auditDao = new AuditDao();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -53,12 +55,21 @@ public class LoginServlet extends HttpServlet {
             }
 
             User user = userOptional.get();
+            HttpSession existingSession = request.getSession(false);
+            if (existingSession != null) {
+                existingSession.invalidate();
+            }
             HttpSession session = request.getSession(true);
             session.setAttribute("loggedInUser", user.getUsername());
             session.setAttribute("loggedInUserId", user.getId());
             session.setAttribute("loggedInUserName", user.getFullName());
             session.setAttribute("loggedInUserRole", user.getRole());
             session.setMaxInactiveInterval(30 * 60);
+
+            try {
+                auditDao.logAction("users", user.getId(), "LOGIN", user.getId());
+            } catch (SQLException ignored) {
+            }
 
             response.sendRedirect(request.getContextPath() + "/dashboard");
         } catch (SQLException e) {

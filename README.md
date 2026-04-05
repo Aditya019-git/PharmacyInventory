@@ -71,6 +71,16 @@ Day 6 reporting workflows are complete:
 - Invoice deep-link from sales report rows
 - Reports navigation integrated across all major modules
 
+## Day 7 Status
+
+Day 7 finalization and release readiness are complete:
+
+- Login hardening with session fixation protection
+- Audit logging added for login/logout events
+- Audit logging added for admin-created pharmacist users
+- Full testing checklist document added
+- Deployment guide and demo checklist added
+
 ## Project Structure
 
 ```text
@@ -89,12 +99,16 @@ docs/
   Day1-Wireframes.md
   Day2-Database.md
   Day2-ERD.md
+  Day7-Testing-Checklist.md
+  Day7-Deployment-Guide.md
+  Day7-Demo-Checklist.md
 database/
   day2_schema.sql
   day2_seed.sql
   day2_drop_cashier_role.sql
+  day7_sample_data.sql
 ```
 
 ## Next
 
-Day 7: Final validation pass, deployment checklist, and demo/package readiness.
+Project ready for final demo and handoff.
