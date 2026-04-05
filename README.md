@@ -60,6 +60,17 @@ Day 5 billing and invoice workflows are complete:
 - Printable invoice page with totals, payment mode, and itemized batch lines
 - Billing menu integrated across all primary modules
 
+## Day 6 Status
+
+Day 6 reporting workflows are complete:
+
+- Reports dashboard with date-range and payment-mode sales filters
+- Sales summary KPIs (total bills, total items, total revenue)
+- Low-stock report with reorder shortage visibility
+- Expiry risk report combining near-expiry and expired batches
+- Invoice deep-link from sales report rows
+- Reports navigation integrated across all major modules
+
 ## Project Structure
 
 ```text
@@ -86,4 +97,4 @@ database/
 
 ## Next
 
-Day 6: Reports module and export-ready daily/weekly sales summaries.
+Day 7: Final validation pass, deployment checklist, and demo/package readiness.
